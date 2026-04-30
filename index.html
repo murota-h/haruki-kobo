@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アプリ屋はるき工房 — Flutter・AI・現場DX</title>
+<meta name="description" content="お店や個人の「あったらいいな」をちょうどいいサイズで作ります。飲食店・雑貨店・製造業のアプリ開発ご相談はアプリ屋はるき工房へ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #fdf9f4;
+    --surface: #ffffff;
+    --ink: #28231e;
+    --muted: #7d7168;
+    --border: #e9e2d8;
+    --accent: #c96a2a;
+    --accent-bg: #fdf0e6;
+    --green: #3d7a54;
+    --green-bg: #eef6f1;
+    --blue: #3a6ea8;
+    --blue-bg: #edf3fb;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.8;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(253,249,244,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 52px;
+  }
+  .nav-logo {
+    font-family: 'Klee One', cursive;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+  }
+  .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+  .nav-links a { font-size: 13px; text-decoration: none; color: var(--muted); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero { padding: 108px 2rem 72px; max-width: 760px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-bg); color: var(--accent);
+    font-size: 12px; font-weight: 700;
+    padding: 5px 14px; border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Klee One', cursive;
+    font-size: clamp(28px, 5.5vw, 52px);
+    font-weight: 600; line-height: 1.45;
+    letter-spacing: -0.01em; margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(transparent 60%, #fcd49a 60%);
+  }
+  .hero-body {
+    font-size: 15px; color: var(--muted);
+    max-width: 500px; margin-bottom: 36px; line-height: 2;
+  }
+  .btn-main {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; font-weight: 700;
+    padding: 14px 32px; border-radius: 8px;
+    text-decoration: none; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-main:hover { background: #a8551f; transform: translateY(-1px); }
+  .hero-note { margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .hero-note::before { content: '✓ '; color: var(--green); font-weight: 700; }
+
+  hr.sep { border: none; border-top: 1px solid var(--border); max-width: 760px; margin: 0 auto; }
+  .section { padding: 64px 2rem; max-width: 760px; margin: 0 auto; }
+  .label { font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .section-title { font-family: 'Klee One', cursive; font-size: clamp(22px, 3.5vw, 32px); font-weight: 600; margin-bottom: 32px; }
+
+  /* FOR WHO */
+  .for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .for-grid { grid-template-columns: 1fr; } }
+  .for-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px 22px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .for-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .for-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+  .for-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .for-card p { font-size: 13px; color: var(--muted); line-height: 1.75; }
+
+  /* WHAT */
+  .what-area { display: flex; flex-direction: column; gap: 16px; }
+  .what-block { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 26px; }
+  .what-block-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .what-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 100px; flex-shrink: 0; }
+  .badge-shop { background: var(--green-bg); color: var(--green); }
+  .badge-factory { background: var(--blue-bg); color: var(--blue); }
+  .what-block h3 { font-size: 16px; font-weight: 700; }
+  .what-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .what-list li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.7; }
+  .what-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 1px; }
+  .what-sub { font-size: 12px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); line-height: 1.7; }
+
+  /* WORKS */
+  .works-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--border); }
+  .work-item { background: var(--surface); padding: 22px 26px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .work-item:hover { background: var(--bg); }
+  .work-left h3 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+  .work-left p { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 440px; }
+  .work-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font-size: 11px; padding: 3px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 100px; color: var(--muted); }
+  .status { font-size: 11px; padding: 4px 12px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .s-done { background: var(--green-bg); color: var(--green); }
+  .s-wip { background: var(--accent-bg); color: var(--accent); }
+  .s-open { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+
+  /* ABOUT */
+  .about-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; display: flex; gap: 24px; align-items: flex-start; }
+  @media (max-width: 480px) { .about-card { flex-direction: column; } }
+  .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+  .about-name { font-family: 'Klee One', cursive; font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .about-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+  .about-body { font-size: 13px; color: var(--muted); line-height: 1.9; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag { font-size: 12px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); background: var(--bg); }
+
+  /* FLOW */
+  .flow-list { display: flex; flex-direction: column; }
+  .flow-item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-num-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .flow-num { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .flow-line { width: 1px; flex: 1; min-height: 18px; background: var(--border); margin: 4px 0; }
+  .flow-body { padding-top: 4px; }
+  .flow-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .flow-body p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* CONTACT */
+  .contact-wrap { background: var(--ink); border-radius: 20px; padding: 48px 36px; color: #fff; }
+  .contact-wrap .label { color: rgba(255,255,255,0.35); }
+  .contact-title { font-family: 'Klee One', cursive; font-size: clamp(22px, 4vw, 36px); font-weight: 600; margin-bottom: 14px; color: #fff; }
+  .contact-body { font-size: 14px; color: rgba(255,255,255,0.55); max-width: 440px; line-height: 2; margin-bottom: 28px; }
+  .btn-contact {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; color: var(--ink);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px; font-weight: 700;
+    padding: 14px 32px; border-radius: 8px;
+    text-decoration: none; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-contact:hover { background: #f0ebe4; transform: translateY(-1px); }
+  .contact-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 14px; }
+
+  footer { text-align: center; padding: 28px 2rem 44px; font-size: 12px; color: var(--muted); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .hero > * { animation: fadeUp 0.5s ease both; }
+  .hero > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero > *:nth-child(2) { animation-delay: 0.12s; }
+  .hero > *:nth-child(3) { animation-delay: 0.2s; }
+  .hero > *:nth-child(4) { animation-delay: 0.28s; }
+  .hero > *:nth-child(5) { animation-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#"><span class="dot"></span>アプリ屋はるき工房</a>
+  <ul class="nav-links">
+    <li><a href="#for">こんな方へ</a></li>
+    <li><a href="#what">できること</a></li>
+    <li><a href="#works">実績</a></li>
+    <li><a href="#contact">相談する</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">👋 個人アプリ開発者 · はるき工房</div>
+  <h1>お店や個人の「あったらいいな」を<br><em>ちょうどいいサイズで</em>作ります。</h1>
+  <p class="hero-body">
+    システム会社に頼むほどじゃない。でも、あったら絶対ラクになる。<br>
+    そんなアプリを、個人開発者が一から丁寧に作ります。<br>
+    製造・工場系のご相談も得意です。まずは気軽に話しかけてください。
+  </p>
+  <a href="#contact" class="btn-main">気軽に相談してみる →</a>
+  <p class="hero-note">見積もり・相談だけでもOK。費用ゼロで話を聞きます。</p>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="for">
+  <div class="label">For Who</div>
+  <h2 class="section-title">こんな方にちょうどいいです</h2>
+  <div class="for-grid">
+    <div class="for-card">
+      <span class="for-icon">🍽️</span>
+      <h3>飲食店・カフェのオーナー</h3>
+      <p>注文管理、予約メモ、スタッフ連絡ツールなど。「Excelじゃ限界…」というあれを解決します。</p>
+    </div>
+    <div class="for-card">
+      <span class="for-icon">🛍️</span>
+      <h3>雑貨屋・小売店の方</h3>
+      <p>在庫確認アプリ、商品QRコード管理、スタッフ向け業務ツールなど。小さなお店にちょうどいい規模で。</p>
+    </div>
+    <div class="for-card">
+      <span class="for-icon">🏭</span>
+      <h3>工場・製造業の担当者</h3>
+      <p>点検記録、KY活動、作業手順の電子化など。現場目線でわかる人が作るので的外れになりません。</p>
+    </div>
+    <div class="for-card">
+      <span class="for-icon">💡</span>
+      <h3>「こんなの作れる？」という個人の方</h3>
+      <p>副業管理、家族で使えるツール、趣味の記録アプリなど。小さなアイデアでも歓迎です。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="what">
+  <div class="label">What I Do</div>
+  <h2 class="section-title">得意なこと・できること</h2>
+  <div class="what-area">
+    <div class="what-block">
+      <div class="what-block-head">
+        <span class="what-badge badge-shop">お店・個人向け</span>
+        <h3>身近な困りごとをアプリで解決</h3>
+      </div>
+      <ul class="what-list">
+        <li>スマホ・タブレットで動くAndroid / Webアプリの開発</li>
+        <li>注文・在庫・予約などの簡易管理ツール</li>
+        <li>スタッフへの連絡・マニュアル共有アプリ</li>
+        <li>AIを使った画像認識・文章生成の組み込み</li>
+        <li>既存のExcel業務をアプリに置き換え</li>
+      </ul>
+      <p class="what-sub">※ 大規模なシステムや基幹業務連携は対応外ですが、「小さくて使いやすい」ものが得意です。</p>
+    </div>
+    <div class="what-block">
+      <div class="what-block-head">
+        <span class="what-badge badge-factory">製造・工場向け</span>
+        <h3>現場で使えるDXツールの相談にも乗ります</h3>
+      </div>
+      <ul class="what-list">
+        <li>点検・記録・KY活動のデジタル化</li>
+        <li>作業手順・引き継ぎのアプリ化</li>
+        <li>寸法計算・補正などの計算ツール</li>
+        <li>タブレット共有を前提にした現場向け設計</li>
+        <li>「こんなことできる？」という段階からの相談</li>
+      </ul>
+      <p class="what-sub">製造現場での実務経験があるため、「使う人の立場」で考えることができます。</p>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="works">
+  <div class="label">Works</div>
+  <h2 class="section-title">作ってきたもの</h2>
+  <div class="works-list">
+    <div class="work-item">
+      <div class="work-left">
+        <h3>温度補正計算ツール</h3>
+        <p>素材の温度による寸法補正を自動計算するWebアプリ。現場スタッフが毎日使える実用ツール。</p>
+        <div class="work-chips">
+          <span class="chip">Flutter Web</span><span class="chip">製造現場</span><span class="chip">GitHub Pages</span>
+        </div>
+      </div>
+      <div class="status s-done">公開中</div>
+    </div>
+    <div class="work-item">
+      <div class="work-left">
+        <h3>部品写真リネームツール</h3>
+        <p>工業部品の写真をAIが認識して自動的にファイル名を整理。撮影後の手作業をゼロに。</p>
+        <div class="work-chips">
+          <span class="chip">Flutter</span><span class="chip">Gemini API</span><span class="chip">画像認識</span>
+        </div>
+      </div>
+      <div class="status s-done">公開中</div>
+    </div>
+    <div class="work-item">
+      <div class="work-left">
+        <h3>KY活動デジタル化アプリ</h3>
+        <p>工場の危険予知活動をタブレットで。AIキャラのアドバイスやガチャ演出で現場が楽しく参加できる工夫も。</p>
+        <div class="work-chips">
+          <span class="chip">Flutter</span><span class="chip">AI連携</span><span class="chip">タブレット対応</span>
+        </div>
+      </div>
+      <div class="status s-wip">開発中</div>
+    </div>
+    <div class="work-item">
+      <div class="work-left">
+        <h3>あなたのアプリ</h3>
+        <p>次はここに載るかもしれません。</p>
+      </div>
+      <div class="status s-open">募集中</div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="about">
+  <div class="label">About</div>
+  <h2 class="section-title">作っている人</h2>
+  <div class="about-card">
+    <div class="avatar">🔧</div>
+    <div>
+      <div class="about-name">はるき（murota-h）</div>
+      <div class="about-sub">個人アプリ開発者 · Flutter / AI · 製造業出身</div>
+      <p class="about-body">
+        製造現場での実務経験をベースに、「あったら便利なのに」を自分で作り始めました。プログラミングスクール出身でも、IT企業勤務でもない、普通のものづくり好きです。<br>
+        小さなお店や個人の方にも「こんなの作れるの？」と気軽に声をかけてもらえるよう、丁寧な対応を心がけています。
+      </p>
+      <div class="tag-row">
+        <span class="tag">Flutter</span>
+        <span class="tag">Gemini API</span>
+        <span class="tag">Claude API</span>
+        <span class="tag">GitHub Pages</span>
+        <span class="tag">Android APK</span>
+        <span class="tag">製造業ノウハウ</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="flow">
+  <div class="label">Process</div>
+  <h2 class="section-title">依頼の流れ</h2>
+  <div class="flow-list">
+    <div class="flow-item">
+      <div class="flow-num-col"><div class="flow-num">1</div><div class="flow-line"></div></div>
+      <div class="flow-body">
+        <h3>まず話してみる</h3>
+        <p>「こんなの作れますか？」でOK。ざっくりした相談から大丈夫です。費用ゼロで話を聞きます。</p>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-num-col"><div class="flow-num">2</div><div class="flow-line"></div></div>
+      <div class="flow-body">
+        <h3>一緒に整理する</h3>
+        <p>何がしたいか、誰が使うか、どんな環境かをヒアリング。難しい言葉は使いません。</p>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-num-col"><div class="flow-num">3</div><div class="flow-line"></div></div>
+      <div class="flow-body">
+        <h3>作りながら確認する</h3>
+        <p>途中経過をこまめに共有。「思ってたんと違う」をなくす進め方をします。</p>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-num-col"><div class="flow-num">4</div></div>
+      <div class="flow-body">
+        <h3>納品・使ってみる</h3>
+        <p>APKまたはWebアプリとして納品。使ってみて気になった点のフォローもします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sep">
+
+<section class="section" id="contact">
+  <div class="contact-wrap">
+    <div class="label">Contact</div>
+    <div class="contact-title">まず話しかけてみてください</div>
+    <p class="contact-body">
+      「こんなの作れますか？」「予算がこれくらいなんですが…」<br>
+      そんな入り口で十分です。<br>
+      小さなお店の方も、工場の担当者の方も、個人の方も歓迎です。
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScQOvMRFgE3g2gGedTkmeWkKBDFX897dUZcWxJWF_QqJcbGsA/viewform?usp=publish-editor" target="_blank" class="btn-contact">お問い合わせフォームへ →</a>
+    <p class="contact-note">✓ 相談・見積もりだけでもOK　✓ 断られる心配はしなくて大丈夫</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 アプリ屋はるき工房 — Flutter · AI · 現場DX</p>
+</footer>
+
+</body>
+</html>
