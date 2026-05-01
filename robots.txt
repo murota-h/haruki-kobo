@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://murota-h.github.io/haruki-kobo/sitemap.xml
