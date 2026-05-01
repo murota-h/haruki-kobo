@@ -12,15 +12,23 @@
   :root {
     --bg: #fdf9f4;
     --surface: #ffffff;
-    --ink: #28231e;
-    --muted: #7d7168;
-    --border: #e9e2d8;
-    --accent: #c96a2a;
-    --accent-bg: #fdf0e6;
-    --green: #3d7a54;
-    --green-bg: #eef6f1;
-    --blue: #3a6ea8;
-    --blue-bg: #edf3fb;
+    --ink: #1a1310;
+    --muted: #6b6059;
+    --border: #e5ddd0;
+    --accent: #f06a25;
+    --accent-bg: #fff4ec;
+    --accent-dark: #c44f10;
+    --purple: #8b5cf6;
+    --purple-bg: #f5f3ff;
+    --purple-dark: #6d28d9;
+    --teal: #0d9488;
+    --teal-bg: #f0fdfa;
+    --green: #10b981;
+    --green-bg: #ecfdf5;
+    --blue: #3b82f6;
+    --blue-bg: #eff6ff;
+    --pink: #ec4899;
+    --pink-bg: #fdf2f8;
   }
   html { scroll-behavior: smooth; }
   body {
@@ -52,17 +60,34 @@
   .nav-links a:hover { color: var(--ink); }
 
   /* HERO */
-  .hero { padding: 108px 2rem 72px; max-width: 760px; margin: 0 auto; }
+  .hero-wrap {
+    background: linear-gradient(135deg, #fff4ec 0%, #fdf9f4 45%, #f5f3ff 100%);
+    padding-top: 52px;
+    overflow: hidden;
+  }
+  .hero {
+    padding: 64px 2rem 72px;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-phones { display: none; }
+  }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--accent-bg); color: var(--accent);
+    background: var(--accent); color: #fff;
     font-size: 12px; font-weight: 700;
     padding: 5px 14px; border-radius: 100px;
     margin-bottom: 28px;
   }
   .hero h1 {
     font-family: 'Klee One', cursive;
-    font-size: clamp(28px, 5.5vw, 52px);
+    font-size: clamp(26px, 4.5vw, 46px);
     font-weight: 600; line-height: 1.45;
     letter-spacing: -0.01em; margin-bottom: 22px;
   }
@@ -72,7 +97,7 @@
   }
   .hero-body {
     font-size: 15px; color: var(--muted);
-    max-width: 500px; margin-bottom: 36px; line-height: 2;
+    max-width: 460px; margin-bottom: 36px; line-height: 2;
   }
   .btn-main {
     display: inline-flex; align-items: center; gap: 8px;
@@ -80,102 +105,193 @@
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px; font-weight: 700;
     padding: 14px 32px; border-radius: 8px;
-    text-decoration: none; transition: background 0.2s, transform 0.1s;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 20px rgba(240,106,37,0.4);
   }
-  .btn-main:hover { background: #a8551f; transform: translateY(-1px); }
+  .btn-main:hover { background: var(--accent-dark); transform: translateY(-2px); }
   .hero-note { margin-top: 12px; font-size: 12px; color: var(--muted); }
   .hero-note::before { content: '✓ '; color: var(--green); font-weight: 700; }
 
-  hr.sep { border: none; border-top: 1px solid var(--border); max-width: 760px; margin: 0 auto; }
-  .section { padding: 64px 2rem; max-width: 760px; margin: 0 auto; }
+  /* HERO PHONES */
+  .hero-phones {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    justify-content: center;
+    height: 380px;
+  }
+  .phone-card {
+    width: 148px;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.22);
+    flex-shrink: 0;
+    border: 3px solid rgba(255,255,255,0.8);
+  }
+  .phone-card:nth-child(1) { margin-bottom: 48px; }
+  .phone-card img { width: 100%; display: block; }
+
+  hr.sep { border: none; border-top: 1px solid var(--border); max-width: 920px; margin: 0 auto; }
+  .section { padding: 64px 2rem; max-width: 920px; margin: 0 auto; }
   .label { font-size: 11px; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
   .section-title { font-family: 'Klee One', cursive; font-size: clamp(22px, 3.5vw, 32px); font-weight: 600; margin-bottom: 32px; }
 
   /* FOR WHO */
+  .for-section { background: linear-gradient(160deg, #f5f3ff 0%, #fdf9f4 60%, #f0fdfa 100%); }
   .for-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 560px) { .for-grid { grid-template-columns: 1fr; } }
   .for-card {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 24px 22px;
-    transition: border-color 0.2s, transform 0.2s;
+    border-radius: 16px; padding: 26px 22px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 4px solid transparent;
   }
-  .for-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .for-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+  .for-card:nth-child(1) { border-top-color: var(--accent); }
+  .for-card:nth-child(2) { border-top-color: var(--purple); }
+  .for-card:nth-child(3) { border-top-color: var(--teal); }
+  .for-card:nth-child(4) { border-top-color: var(--pink); }
+  .for-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.09); }
+  .for-icon { font-size: 32px; margin-bottom: 12px; display: block; }
   .for-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
   .for-card p { font-size: 13px; color: var(--muted); line-height: 1.75; }
 
   /* WHAT */
   .what-area { display: flex; flex-direction: column; gap: 16px; }
-  .what-block { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 26px; }
+  .what-block {
+    border-radius: 16px; padding: 28px 26px;
+    border-left: 5px solid transparent;
+  }
+  .what-block:nth-child(1) { background: var(--green-bg); border-left-color: var(--green); }
+  .what-block:nth-child(2) { background: var(--blue-bg); border-left-color: var(--blue); }
   .what-block-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-  .what-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 100px; flex-shrink: 0; }
-  .badge-shop { background: var(--green-bg); color: var(--green); }
-  .badge-factory { background: var(--blue-bg); color: var(--blue); }
+  .what-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 14px; border-radius: 100px; flex-shrink: 0; color: #fff; }
+  .badge-shop { background: var(--green); }
+  .badge-factory { background: var(--blue); }
   .what-block h3 { font-size: 16px; font-weight: 700; }
   .what-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .what-list li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.7; }
   .what-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 1px; }
-  .what-sub { font-size: 12px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); line-height: 1.7; }
+  .what-sub { font-size: 12px; color: var(--muted); margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(0,0,0,0.08); line-height: 1.7; }
 
   /* WORKS */
-  .works-list { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--border); }
-  .work-item { background: var(--surface); padding: 22px 26px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-  .work-item:hover { background: var(--bg); }
-  .work-left h3 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
-  .work-left p { font-size: 13px; color: var(--muted); line-height: 1.7; max-width: 440px; }
-  .work-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .chip { font-size: 11px; padding: 3px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 100px; color: var(--muted); }
-  .status { font-size: 11px; padding: 4px 12px; border-radius: 100px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .works-section { background: linear-gradient(160deg, #fdf9f4 0%, #fff4ec 100%); }
+  .works-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 720px) { .works-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .works-grid { grid-template-columns: 1fr; } }
+  .work-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .work-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.11); }
+  .work-img-wrap { width: 100%; height: 220px; overflow: hidden; background: var(--bg); }
+  .work-img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .work-placeholder {
+    width: 100%; height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 56px;
+  }
+  .work-card-body { padding: 16px 16px 14px; }
+  .work-card-body h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .work-card-body p { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 10px; }
+  .work-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .chip { font-size: 11px; padding: 2px 9px; background: var(--bg); border: 1px solid var(--border); border-radius: 100px; color: var(--muted); }
+  .status { font-size: 11px; padding: 3px 11px; border-radius: 100px; display: inline-block; font-weight: 600; }
   .s-done { background: var(--green-bg); color: var(--green); }
   .s-wip { background: var(--accent-bg); color: var(--accent); }
-  .s-open { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
 
   /* ABOUT */
-  .about-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px 28px; display: flex; gap: 24px; align-items: flex-start; }
+  .about-section { background: linear-gradient(160deg, #fff4ec 0%, #fdf9f4 50%, #f5f3ff 100%); }
+  .about-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px 32px;
+    display: flex; gap: 28px; align-items: flex-start;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
   @media (max-width: 480px) { .about-card { flex-direction: column; } }
-  .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-bg); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
-  .about-name { font-family: 'Klee One', cursive; font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; flex-shrink: 0;
+  }
+  .about-name { font-family: 'Klee One', cursive; font-size: 20px; font-weight: 600; margin-bottom: 4px; }
   .about-sub { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
   .about-body { font-size: 13px; color: var(--muted); line-height: 1.9; }
   .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-  .tag { font-size: 12px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); background: var(--bg); }
+  .tag { font-size: 12px; padding: 4px 14px; border-radius: 100px; font-weight: 500; border: 1px solid transparent; }
+  .tag:nth-child(1) { background: var(--accent-bg); color: var(--accent-dark); border-color: #fcd49a; }
+  .tag:nth-child(2) { background: var(--purple-bg); color: var(--purple-dark); border-color: #c4b5fd; }
+  .tag:nth-child(3) { background: var(--blue-bg); color: var(--blue); border-color: #bfdbfe; }
+  .tag:nth-child(4) { background: var(--green-bg); color: var(--teal); border-color: #6ee7b7; }
+  .tag:nth-child(5) { background: var(--pink-bg); color: var(--pink); border-color: #fbcfe8; }
+  .tag:nth-child(6) { background: #fefce8; color: #a16207; border-color: #fde68a; }
 
   /* FLOW */
+  .flow-section { background: linear-gradient(160deg, #f0fdfa 0%, #fdf9f4 100%); }
   .flow-list { display: flex; flex-direction: column; }
   .flow-item { display: flex; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border); }
   .flow-item:last-child { border-bottom: none; }
   .flow-num-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-  .flow-num { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
-  .flow-line { width: 1px; flex: 1; min-height: 18px; background: var(--border); margin: 4px 0; }
+  .flow-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .flow-line { width: 2px; flex: 1; min-height: 18px; background: linear-gradient(to bottom, var(--accent), var(--purple)); opacity: 0.2; margin: 4px 0; }
   .flow-body { padding-top: 4px; }
   .flow-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
   .flow-body p { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
   /* CONTACT */
-  .contact-wrap { background: var(--ink); border-radius: 20px; padding: 48px 36px; color: #fff; }
+  .contact-wrap {
+    background: linear-gradient(135deg, #1a1310 0%, #3b1a08 50%, #2d1458 100%);
+    border-radius: 24px; padding: 56px 40px;
+    position: relative; overflow: hidden;
+  }
+  .contact-wrap::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(240,106,37,0.35) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .contact-wrap::after {
+    content: '';
+    position: absolute; bottom: -40px; left: 80px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(139,92,246,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
   .contact-wrap .label { color: rgba(255,255,255,0.35); }
   .contact-title { font-family: 'Klee One', cursive; font-size: clamp(22px, 4vw, 36px); font-weight: 600; margin-bottom: 14px; color: #fff; }
-  .contact-body { font-size: 14px; color: rgba(255,255,255,0.55); max-width: 440px; line-height: 2; margin-bottom: 28px; }
+  .contact-body { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 440px; line-height: 2; margin-bottom: 28px; }
   .btn-contact {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #fff; color: var(--ink);
+    background: var(--accent); color: #fff;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px; font-weight: 700;
     padding: 14px 32px; border-radius: 8px;
-    text-decoration: none; transition: background 0.2s, transform 0.1s;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 20px rgba(240,106,37,0.5);
+    position: relative; z-index: 1;
   }
-  .btn-contact:hover { background: #f0ebe4; transform: translateY(-1px); }
+  .btn-contact:hover { background: var(--accent-dark); transform: translateY(-2px); }
   .contact-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 14px; }
 
   footer { text-align: center; padding: 28px 2rem 44px; font-size: 12px; color: var(--muted); }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  .hero > * { animation: fadeUp 0.5s ease both; }
-  .hero > *:nth-child(1) { animation-delay: 0.05s; }
-  .hero > *:nth-child(2) { animation-delay: 0.12s; }
-  .hero > *:nth-child(3) { animation-delay: 0.2s; }
-  .hero > *:nth-child(4) { animation-delay: 0.28s; }
-  .hero > *:nth-child(5) { animation-delay: 0.35s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-content > * { animation: fadeUp 0.5s ease both; }
+  .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero-content > *:nth-child(2) { animation-delay: 0.12s; }
+  .hero-content > *:nth-child(3) { animation-delay: 0.2s; }
+  .hero-content > *:nth-child(4) { animation-delay: 0.28s; }
+  .hero-content > *:nth-child(5) { animation-delay: 0.35s; }
+  .hero-phones { animation: fadeUp 0.7s ease 0.15s both; }
 </style>
 </head>
 <body>
@@ -190,46 +306,60 @@
   </ul>
 </nav>
 
-<section class="hero">
-  <div class="hero-badge">👋 個人アプリ開発者 · はるき工房</div>
-  <h1>お店や個人の「あったらいいな」を<br><em>ちょうどいいサイズで</em>作ります。</h1>
-  <p class="hero-body">
-    システム会社に頼むほどじゃない。でも、あったら絶対ラクになる。<br>
-    そんなアプリを、個人開発者が一から丁寧に作ります。<br>
-    製造・工場系のご相談も得意です。まずは気軽に話しかけてください。
-  </p>
-  <a href="#contact" class="btn-main">気軽に相談してみる →</a>
-  <p class="hero-note">見積もり・相談だけでもOK。費用ゼロで話を聞きます。</p>
-</section>
+<div class="hero-wrap">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">👋 個人アプリ開発者 · はるき工房</div>
+      <h1>お店や個人の「あったらいいな」を<br><em>ちょうどいいサイズで</em>作ります。</h1>
+      <p class="hero-body">
+        システム会社に頼むほどじゃない。でも、あったら絶対ラクになる。<br>
+        そんなアプリを、個人開発者が一から丁寧に作ります。<br>
+        製造・工場系のご相談も得意です。まずは気軽に話しかけてください。
+      </p>
+      <a href="#contact" class="btn-main">気軽に相談してみる →</a>
+      <p class="hero-note">見積もり・相談だけでもOK。費用ゼロで話を聞きます。</p>
+    </div>
+    <div class="hero-phones">
+      <div class="phone-card">
+        <img src="images/ky_card.jpg" alt="KY活動アプリ">
+      </div>
+      <div class="phone-card">
+        <img src="images/mojimoji.png" alt="もじもじチェンジャー">
+      </div>
+    </div>
+  </div>
+</div>
 
 <hr class="sep">
 
-<section class="section" id="for">
-  <div class="label">For Who</div>
-  <h2 class="section-title">こんな方にちょうどいいです</h2>
-  <div class="for-grid">
-    <div class="for-card">
-      <span class="for-icon">🍽️</span>
-      <h3>飲食店・カフェのオーナー</h3>
-      <p>注文管理、予約メモ、スタッフ連絡ツールなど。「Excelじゃ限界…」というあれを解決します。</p>
+<div class="for-section">
+  <section class="section" id="for">
+    <div class="label">For Who</div>
+    <h2 class="section-title">こんな方にちょうどいいです</h2>
+    <div class="for-grid">
+      <div class="for-card">
+        <span class="for-icon">🍽️</span>
+        <h3>飲食店・カフェのオーナー</h3>
+        <p>注文管理、予約メモ、スタッフ連絡ツールなど。「Excelじゃ限界…」というあれを解決します。</p>
+      </div>
+      <div class="for-card">
+        <span class="for-icon">🛍️</span>
+        <h3>雑貨屋・小売店の方</h3>
+        <p>在庫確認アプリ、商品QRコード管理、スタッフ向け業務ツールなど。小さなお店にちょうどいい規模で。</p>
+      </div>
+      <div class="for-card">
+        <span class="for-icon">🏭</span>
+        <h3>工場・製造業の担当者</h3>
+        <p>点検記録、KY活動、作業手順の電子化など。現場目線でわかる人が作るので的外れになりません。</p>
+      </div>
+      <div class="for-card">
+        <span class="for-icon">💡</span>
+        <h3>「こんなの作れる？」という個人の方</h3>
+        <p>副業管理、家族で使えるツール、趣味の記録アプリなど。小さなアイデアでも歓迎です。</p>
+      </div>
     </div>
-    <div class="for-card">
-      <span class="for-icon">🛍️</span>
-      <h3>雑貨屋・小売店の方</h3>
-      <p>在庫確認アプリ、商品QRコード管理、スタッフ向け業務ツールなど。小さなお店にちょうどいい規模で。</p>
-    </div>
-    <div class="for-card">
-      <span class="for-icon">🏭</span>
-      <h3>工場・製造業の担当者</h3>
-      <p>点検記録、KY活動、作業手順の電子化など。現場目線でわかる人が作るので的外れになりません。</p>
-    </div>
-    <div class="for-card">
-      <span class="for-icon">💡</span>
-      <h3>「こんなの作れる？」という個人の方</h3>
-      <p>副業管理、家族で使えるツール、趣味の記録アプリなど。小さなアイデアでも歓迎です。</p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <hr class="sep">
 
@@ -270,112 +400,157 @@
 
 <hr class="sep">
 
-<section class="section" id="works">
-  <div class="label">Works</div>
-  <h2 class="section-title">作ってきたもの</h2>
-  <div class="works-list">
-    <div class="work-item">
-      <div class="work-left">
-        <h3>温度補正計算ツール</h3>
-        <p>素材の温度による寸法補正を自動計算するWebアプリ。現場スタッフが毎日使える実用ツール。</p>
-        <div class="work-chips">
-          <span class="chip">Flutter Web</span><span class="chip">製造現場</span><span class="chip">GitHub Pages</span>
+<div class="works-section">
+  <section class="section" id="works">
+    <div class="label">Works</div>
+    <h2 class="section-title">作ってきたもの</h2>
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="work-img-wrap">
+          <img class="work-img" src="images/ky_card.jpg" alt="KY活動アプリ">
+        </div>
+        <div class="work-card-body">
+          <h3>KY活動デジタル化アプリ</h3>
+          <p>危険予知活動をタブレットで。AIキャラのアドバイスやガチャ演出で現場が楽しく参加できる工夫も。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter</span><span class="chip">AI連携</span><span class="chip">タブレット</span>
+          </div>
+          <span class="status s-wip">開発中</span>
         </div>
       </div>
-      <div class="status s-done">公開中</div>
-    </div>
-    <div class="work-item">
-      <div class="work-left">
-        <h3>部品写真リネームツール</h3>
-        <p>工業部品の写真をAIが認識して自動的にファイル名を整理。撮影後の手作業をゼロに。</p>
-        <div class="work-chips">
-          <span class="chip">Flutter</span><span class="chip">Gemini API</span><span class="chip">画像認識</span>
+      <div class="work-card">
+        <div class="work-img-wrap">
+          <img class="work-img" src="images/mojimoji.png" alt="もじもじチェンジャー">
+        </div>
+        <div class="work-card-body">
+          <h3>もじもじチェンジャー</h3>
+          <p>ことばをかわいくへんかんしてくれるアプリ。AIが文章を楽しくアレンジします。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter</span><span class="chip">AI文章生成</span>
+          </div>
+          <span class="status s-done">公開中</span>
         </div>
       </div>
-      <div class="status s-done">公開中</div>
-    </div>
-    <div class="work-item">
-      <div class="work-left">
-        <h3>KY活動デジタル化アプリ</h3>
-        <p>工場の危険予知活動をタブレットで。AIキャラのアドバイスやガチャ演出で現場が楽しく参加できる工夫も。</p>
-        <div class="work-chips">
-          <span class="chip">Flutter</span><span class="chip">AI連携</span><span class="chip">タブレット対応</span>
+      <div class="work-card">
+        <div class="work-img-wrap">
+          <img class="work-img" src="images/knowledge.jpg" alt="細内ナレッジコネクト">
+        </div>
+        <div class="work-card-body">
+          <h3>細内ナレッジコネクト</h3>
+          <p>確かなルールと自由な提言。職場の申し合わせ記録やみんなの声を管理するツール。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter</span><span class="chip">職場ツール</span>
+          </div>
+          <span class="status s-done">公開中</span>
         </div>
       </div>
-      <div class="status s-wip">開発中</div>
-    </div>
-    <div class="work-item">
-      <div class="work-left">
-        <h3>あなたのアプリ</h3>
-        <p>次はここに載るかもしれません。</p>
+      <div class="work-card">
+        <div class="work-img-wrap">
+          <img class="work-img" src="images/seikibunpu.png" alt="製造現場の統計学習アプリ">
+        </div>
+        <div class="work-card-body">
+          <h3>製造現場の統計学習アプリ</h3>
+          <p>工場で役立つ統計知識（正規分布・管理図など）をわかりやすく学べる現場向け教材アプリ。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter</span><span class="chip">学習アプリ</span><span class="chip">製造業</span>
+          </div>
+          <span class="status s-done">公開中</span>
+        </div>
       </div>
-      <div class="status s-open">募集中</div>
+      <div class="work-card">
+        <div class="work-img-wrap">
+          <img class="work-img" src="images/buhin_rename.jpg" alt="部品写真リネームツール">
+        </div>
+        <div class="work-card-body">
+          <h3>部品写真リネームツール</h3>
+          <p>工業部品の写真をAIが認識して自動的にファイル名を整理。撮影後の手作業をゼロに。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter</span><span class="chip">Gemini API</span><span class="chip">画像認識</span>
+          </div>
+          <span class="status s-done">公開中</span>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-placeholder" style="background: linear-gradient(135deg, #eff6ff, #dbeafe);">🌡️</div>
+        <div class="work-card-body">
+          <h3>温度補正計算ツール</h3>
+          <p>素材の温度による寸法補正を自動計算するWebアプリ。現場スタッフが毎日使える実用ツール。</p>
+          <div class="work-chips">
+            <span class="chip">Flutter Web</span><span class="chip">製造現場</span><span class="chip">GitHub Pages</span>
+          </div>
+          <span class="status s-done">公開中</span>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <hr class="sep">
 
-<section class="section" id="about">
-  <div class="label">About</div>
-  <h2 class="section-title">作っている人</h2>
-  <div class="about-card">
-    <div class="avatar">🔧</div>
-    <div>
-      <div class="about-name">はるき（murota-h）</div>
-      <div class="about-sub">個人アプリ開発者 · Flutter / AI · 製造業出身</div>
-      <p class="about-body">
-        製造現場での実務経験をベースに、「あったら便利なのに」を自分で作り始めました。プログラミングスクール出身でも、IT企業勤務でもない、普通のものづくり好きです。<br>
-        小さなお店や個人の方にも「こんなの作れるの？」と気軽に声をかけてもらえるよう、丁寧な対応を心がけています。
-      </p>
-      <div class="tag-row">
-        <span class="tag">Flutter</span>
-        <span class="tag">Gemini API</span>
-        <span class="tag">Claude API</span>
-        <span class="tag">GitHub Pages</span>
-        <span class="tag">Android APK</span>
-        <span class="tag">製造業ノウハウ</span>
+<div class="about-section">
+  <section class="section" id="about">
+    <div class="label">About</div>
+    <h2 class="section-title">作っている人</h2>
+    <div class="about-card">
+      <div class="avatar">🔧</div>
+      <div>
+        <div class="about-name">はるき（murota-h）</div>
+        <div class="about-sub">個人アプリ開発者 · Flutter / AI · 製造業出身</div>
+        <p class="about-body">
+          製造現場での実務経験をベースに、「あったら便利なのに」を自分で作り始めました。プログラミングスクール出身でも、IT企業勤務でもない、普通のものづくり好きです。<br>
+          小さなお店や個人の方にも「こんなの作れるの？」と気軽に声をかけてもらえるよう、丁寧な対応を心がけています。
+        </p>
+        <div class="tag-row">
+          <span class="tag">Flutter</span>
+          <span class="tag">Gemini API</span>
+          <span class="tag">Claude API</span>
+          <span class="tag">GitHub Pages</span>
+          <span class="tag">Android APK</span>
+          <span class="tag">製造業ノウハウ</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <hr class="sep">
 
-<section class="section" id="flow">
-  <div class="label">Process</div>
-  <h2 class="section-title">依頼の流れ</h2>
-  <div class="flow-list">
-    <div class="flow-item">
-      <div class="flow-num-col"><div class="flow-num">1</div><div class="flow-line"></div></div>
-      <div class="flow-body">
-        <h3>まず話してみる</h3>
-        <p>「こんなの作れますか？」でOK。ざっくりした相談から大丈夫です。費用ゼロで話を聞きます。</p>
+<div class="flow-section">
+  <section class="section" id="flow">
+    <div class="label">Process</div>
+    <h2 class="section-title">依頼の流れ</h2>
+    <div class="flow-list">
+      <div class="flow-item">
+        <div class="flow-num-col"><div class="flow-num">1</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <h3>まず話してみる</h3>
+          <p>「こんなの作れますか？」でOK。ざっくりした相談から大丈夫です。費用ゼロで話を聞きます。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num-col"><div class="flow-num">2</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <h3>一緒に整理する</h3>
+          <p>何がしたいか、誰が使うか、どんな環境かをヒアリング。難しい言葉は使いません。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num-col"><div class="flow-num">3</div><div class="flow-line"></div></div>
+        <div class="flow-body">
+          <h3>作りながら確認する</h3>
+          <p>途中経過をこまめに共有。「思ってたんと違う」をなくす進め方をします。</p>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-num-col"><div class="flow-num">4</div></div>
+        <div class="flow-body">
+          <h3>納品・使ってみる</h3>
+          <p>APKまたはWebアプリとして納品。使ってみて気になった点のフォローもします。</p>
+        </div>
       </div>
     </div>
-    <div class="flow-item">
-      <div class="flow-num-col"><div class="flow-num">2</div><div class="flow-line"></div></div>
-      <div class="flow-body">
-        <h3>一緒に整理する</h3>
-        <p>何がしたいか、誰が使うか、どんな環境かをヒアリング。難しい言葉は使いません。</p>
-      </div>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num-col"><div class="flow-num">3</div><div class="flow-line"></div></div>
-      <div class="flow-body">
-        <h3>作りながら確認する</h3>
-        <p>途中経過をこまめに共有。「思ってたんと違う」をなくす進め方をします。</p>
-      </div>
-    </div>
-    <div class="flow-item">
-      <div class="flow-num-col"><div class="flow-num">4</div></div>
-      <div class="flow-body">
-        <h3>納品・使ってみる</h3>
-        <p>APKまたはWebアプリとして納品。使ってみて気になった点のフォローもします。</p>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <hr class="sep">
 
